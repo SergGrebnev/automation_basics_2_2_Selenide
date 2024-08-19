@@ -30,17 +30,20 @@ public class CardWithDeliveryTest {
     @Test
     public void testFormCardHappyPath() {
         $("[data-test-id='city'] input").setValue("Новосибирск");
-        $("[data-test-id ='date'] input").sendKeys(Keys.SHIFT, Keys.HOME);
-        LocalDate date = LocalDate.now();
-        date = date.plusDays(4);
-        String textDate = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        $("[data-test-id ='date'] input").sendKeys(Keys.SHIFT, Keys.HOME); // выделение текста кнопками Shift+Home
+        LocalDate date = LocalDate.now(); //получаем текущую дату
+        date = date.plusDays(4); //прибавляем 4 дня
+        String textDate = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")); //перевод даты в формат по шаблону
         $("[data-test-id ='date'] input").sendKeys(textDate);
         $("[data-test-id='name'] input").setValue("Гребнев Сергей");
         $("[data-test-id='phone'] input").setValue("+79130000000");
         $("[data-test-id='agreement']").click();
         $(".button").click();
-        $(withText("Успешно!")).shouldBe(Condition.visible, Duration.ofSeconds(15));
 
+        $("[data-test-id='notification'] .notification__content")
+                .shouldHave(Condition.text("Встреча успешно забронирована на " + textDate), Duration.ofSeconds(15)) //ассерт проверки текста
+                .shouldBe(Condition.visible) //ассерт проверки видимости
+        ;
 
     }
 

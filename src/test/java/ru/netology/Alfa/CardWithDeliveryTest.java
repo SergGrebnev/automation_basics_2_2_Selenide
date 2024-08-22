@@ -44,7 +44,6 @@ public class CardWithDeliveryTest {
                 .shouldHave(Condition.text("Встреча успешно забронирована на " + textDate), Duration.ofSeconds(15)) //ассерт проверки текста
                 .shouldBe(Condition.visible) //ассерт проверки видимости
         ;
-
     }
 
 }
